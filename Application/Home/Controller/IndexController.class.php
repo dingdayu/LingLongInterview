@@ -59,10 +59,15 @@ class IndexController extends Controller {
         //京ICP备04000001号
         $short_key = array_rand($this->SERVER_LOCATION,1);
         $short_value = $this->SERVER_LOCATION[$short_key]['short'];
-        $short_count = self::get_log_count($short_value);
+        $short_count = self::get_log_count($short_value) + 1;
         $short_id = str_pad($short_count,8,'0',STR_PAD_LEFT);   //补0
-        echo $beianhao = $short_value. 'ICP备'.$short_id .'号';
+        $beianhao = $short_value. 'ICP备'.$short_id .'号';
+        $data = self::caiji($beianhao);
+        self::save_log($short_value,$short_count,$data);
+        self::save_data($data);
 
+        echo $beianhao,' ';
+        dump($data);
     }
 
     //一下是支持功能
@@ -91,9 +96,14 @@ class IndexController extends Controller {
     public function caiji($beianhao){
         $html_content = self::curl($this->CURL_URL .$beianhao);
 
+
+
         //提取table
         preg_match_all('%<table id="show_table"(.*?)<\/table>%si',$html_content,$table);
         //print_r($table);
+        $error = preg_match('/没有符合条件的记录, 即未备案/',$table[0][0]);
+        if($error) return 0;
+
         //提取行
         preg_match_all('%<tr>(.*?)<\/tr>%si',$table[0][0],$tr);
         print_r($tr);
@@ -121,9 +131,11 @@ class IndexController extends Controller {
             $data[$i-1]['website_name'] = trim($website_name[1]);
             $data[$i-1]['website_url'] = trim($website_url[1]);
             $data[$i-1]['detailed'] = trim($detailed[1]);
+            $data[$i-1]['time'] = time();
+            $data[$i-1]['short'] = msubstr($beianhao_data_arr[0],0,1,'utf-8',false);
         }
 
-        dump($data);
+        //dump($data);
         return $data;
     }
 
@@ -136,11 +148,26 @@ class IndexController extends Controller {
     }
 
 
-    private function save_log($data){
-        M("BeianLog")->save($data);
+    private function save_log($short,$short_count,$data){
+        if($data == 0){
+            M("BeianLog")->add(array('short'=>$short,'short_count'=>$short_count,'countent'=>$data,'add_time'=>time()));
+            return true;
+        }
+        if(is_array($data)){
+            M("BeianLog")->add(array('short'=>$short,'short_count'=>$short_count,'countent'=>serialize($data),'add_time'=>time()));
+            return true;
+        }
     }
 
-    private function save_data(){
-
+    private function save_data($data){
+        if(is_array($data)){
+            if(array_depth($data) > 1){
+                M("Beian")->add($data);
+                return true;
+            }else{
+                M("Beian")->addAll($data);
+                return true;
+            }
+        }
     }
 }
