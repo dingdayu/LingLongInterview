@@ -16,7 +16,6 @@ use Think\Controller;
 
 class IndexController extends Controller {
     private $CURL_URL = "http://www.beianbeian.com/s?keytype=1&q=";
-    private $CURSORS = 0;       //单个省份的记录个数
     private $SERVER_LOCATION = array(
         array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
         array('xuhao'=>2,'codeID'=>2,'code'=>'BJ','name'=>'北京','short'=>'京'),
@@ -52,7 +51,11 @@ class IndexController extends Controller {
     );
 
     public function index(){
-        echo "--------------------------------";
+        echo "--------------------------------<br>\r\n";
+        echo $audit_time =  date("Y-m-d",time()-24*60*60);
+        $ret_list = M('Beian')->where(array('audit_time'=>$audit_time))->select();
+        echo "<br><h3>下面是昨天的审核域名</h3>";
+        dump($ret_list);
     }
 
     public function cron(){
