@@ -12,14 +12,14 @@
 // +----------------------------------------------------------------------
 
 /**
- * ×Ö·û´®½ØÈ¡£¬Ö§³ÖÖĞÎÄºÍÆäËû±àÂë
+ * å­—ç¬¦ä¸²æˆªå–ï¼Œæ”¯æŒä¸­æ–‡å’Œå…¶ä»–ç¼–ç 
  * @static
  * @access public
- * @param string $str ĞèÒª×ª»»µÄ×Ö·û´®
- * @param string $start ¿ªÊ¼Î»ÖÃ
- * @param string $length ½ØÈ¡³¤¶È
- * @param string $charset ±àÂë¸ñÊ½
- * @param string $suffix ½Ø¶ÏÏÔÊ¾×Ö·û
+ * @param string $str éœ€è¦è½¬æ¢çš„å­—ç¬¦ä¸²
+ * @param string $start å¼€å§‹ä½ç½®
+ * @param string $length æˆªå–é•¿åº¦
+ * @param string $charset ç¼–ç æ ¼å¼
+ * @param string $suffix æˆªæ–­æ˜¾ç¤ºå­—ç¬¦
  * @return string
  */
 function msubstr($str, $start=0, $length, $charset="utf-8", $suffix=true) {

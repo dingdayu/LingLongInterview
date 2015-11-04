@@ -19,29 +19,36 @@ class IndexController extends Controller {
     private $CURSORS = 0;       //单个省份的记录个数
     private $SERVER_LOCATION = array(
         array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
-        array('xuhao'=>1,'codeID'=>1,'code'=>'AH','name'=>'安徽','short'=>'皖'),
+        array('xuhao'=>2,'codeID'=>2,'code'=>'BJ','name'=>'北京','short'=>'京'),
+        array('xuhao'=>3,'codeID'=>3,'code'=>'CQ','name'=>'重庆','short'=>'渝'),
+        array('xuhao'=>4,'codeID'=>4,'code'=>'FJ','name'=>'福建','short'=>'闽'),
+        array('xuhao'=>5,'codeID'=>5,'code'=>'GD','name'=>'广东','short'=>'粤'),
+        array('xuhao'=>6,'codeID'=>6,'code'=>'GS','name'=>'甘肃','short'=>'陇'),
+        array('xuhao'=>7,'codeID'=>7,'code'=>'GX','name'=>'广西','short'=>'桂'),
+        array('xuhao'=>8,'codeID'=>8,'code'=>'GZ','name'=>'贵州','short'=>'黔'),
+        array('xuhao'=>9,'codeID'=>9,'code'=>'HA','name'=>'河南','short'=>'豫'),
+        array('xuhao'=>10,'codeID'=>10,'code'=>'HB','name'=>'湖北','short'=>'鄂'),
+        array('xuhao'=>11,'codeID'=>11,'code'=>'HE','name'=>'河北','short'=>'冀'),
+        array('xuhao'=>12,'codeID'=>12,'code'=>'HI','name'=>'海南','short'=>'琼'),
+        array('xuhao'=>13,'codeID'=>14,'code'=>'HL','name'=>'黑龙江','short'=>'黑'),
+        array('xuhao'=>14,'codeID'=>15,'code'=>'HN','name'=>'湖南','short'=>'湘'),
+        array('xuhao'=>15,'codeID'=>16,'code'=>'JL','name'=>'吉林','short'=>'吉'),
+        array('xuhao'=>16,'codeID'=>17,'code'=>'JS','name'=>'江苏','short'=>'苏'),
+        array('xuhao'=>17,'codeID'=>18,'code'=>'JX','name'=>'江西','short'=>'赣'),
+        array('xuhao'=>18,'codeID'=>19,'code'=>'LN','name'=>'辽宁','short'=>'辽'),
+        array('xuhao'=>19,'codeID'=>21,'code'=>'NM','name'=>'内蒙古','short'=>'蒙'),
+        array('xuhao'=>20,'codeID'=>22,'code'=>'NX','name'=>'宁夏','short'=>'宁'),
+        array('xuhao'=>21,'codeID'=>23,'code'=>'QH','name'=>'青海','short'=>'青'),
+        array('xuhao'=>22,'codeID'=>24,'code'=>'SC','name'=>'四川','short'=>'蜀'),
+        array('xuhao'=>23,'codeID'=>25,'code'=>'SD','name'=>'山东','short'=>'鲁'),
+        array('xuhao'=>24,'codeID'=>26,'code'=>'SH','name'=>'上海','short'=>'沪'),
+        array('xuhao'=>25,'codeID'=>27,'code'=>'SN','name'=>'陕西','short'=>'陕'),
+        array('xuhao'=>26,'codeID'=>28,'code'=>'SX','name'=>'山西','short'=>'晋'),
+        array('xuhao'=>27,'codeID'=>29,'code'=>'TJ','name'=>'天津','short'=>'津'),
+        array('xuhao'=>28,'codeID'=>31,'code'=>'XJ','name'=>'新疆','short'=>'新'),
+        array('xuhao'=>29,'codeID'=>32,'code'=>'XZ','name'=>'西藏','short'=>'藏'),
+        array('xuhao'=>30,'codeID'=>33,'code'=>'YN','name'=>'云南','short'=>'滇'),
+        array('xuhao'=>31,'codeID'=>34,'code'=>'ZJ','name'=>'浙江','short'=>'浙'),
     );
 
     public function index(){
@@ -49,6 +56,12 @@ class IndexController extends Controller {
     }
 
     public function cron(){
+        //京ICP备04000001号
+        $short_key = array_rand($this->SERVER_LOCATION,1);
+        $short_value = $this->SERVER_LOCATION[$short_key]['short'];
+        $short_count = self::get_log_count($short_value);
+        $short_id = str_pad($short_count,8,'0',STR_PAD_LEFT);   //补0
+        echo $beianhao = $short_value. 'ICP备'.$short_id .'号';
 
     }
 
@@ -114,8 +127,12 @@ class IndexController extends Controller {
         return $data;
     }
 
-    private function get_log_count(){
-
+    private function get_log_count($short){
+        $ret_short = M('BeianLog')->where(array('short'=>$short))->order('short_count desc')->getField('short_count');
+        if($ret_short !== false){
+            return $ret_short;
+        }
+        return 0;
     }
 
 
