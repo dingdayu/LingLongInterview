@@ -58,10 +58,25 @@ class IndexController extends Controller {
         dump($ret_list);
     }
 
-    public function cron(){
+    //当参数不为空时提供区间抓取
+    public function cron($xuhao = '',$end = '',$short_value=''){
         //京ICP备04000001号
-        $short_key = array_rand($this->SERVER_LOCATION,1);
-        $short_value = $this->SERVER_LOCATION[$short_key]['short'];
+        if(empty($short_value)){
+            $short_key = array_rand($this->SERVER_LOCATION,1);
+            $short_value = $this->SERVER_LOCATION[$short_key]['short'];
+        }
+
+        if(!empty($xuhao)){
+            if(S('xuhao') > $end) exit('0');
+            if(S('xuhao') > $xuhao) $xuhao  = S('xuhao');
+            $short_id = str_pad($xuhao,8,'0',STR_PAD_LEFT);   //补0
+            $beianhao = $short_value. 'ICP备'.$short_id .'号';
+            $data = self::caiji($beianhao);
+            self::save_data($data);
+            S('xuhao',$xuhao +1);
+            echo $xuhao +1;
+            exit();
+        }
         $short_count = self::get_log_count($short_value) + 1;
         $short_id = str_pad($short_count,8,'0',STR_PAD_LEFT);   //补0
         $beianhao = $short_value. 'ICP备'.$short_id .'号';
@@ -71,6 +86,11 @@ class IndexController extends Controller {
 
         echo $beianhao,' ';
         dump($data);
+    }
+
+    public function retst_cron(){
+        S('xuhao',null);
+        echo "充值队列成功";
     }
 
     //一下是支持功能
@@ -96,10 +116,8 @@ class IndexController extends Controller {
         return $data;
     }
 
-    public function caiji($beianhao){
+    public function caiji($beianhao = ''){
         $html_content = self::curl($this->CURL_URL .$beianhao);
-
-
 
         //提取table
         preg_match_all('%<table id="show_table"(.*?)<\/table>%si',$html_content,$table);
@@ -109,7 +127,7 @@ class IndexController extends Controller {
 
         //提取行
         preg_match_all('%<tr>(.*?)<\/tr>%si',$table[0][0],$tr);
-        print_r($tr);
+        //print_r($tr);
         //echo count($tr[0]);
 
         //循环提取每行
@@ -132,6 +150,7 @@ class IndexController extends Controller {
             $beianhao_data_arr = explode("-",$data[$i-1]['beianhao_2']);
             $data[$i-1]['beianhao'] = $beianhao_data_arr[0];
             $data[$i-1]['website_name'] = trim($website_name[1]);
+            $data[$i-1]['audit_time'] = trim($audit_time[1]);
             $data[$i-1]['website_url'] = trim($website_url[1]);
             $data[$i-1]['detailed'] = trim($detailed[1]);
             $data[$i-1]['time'] = time();
@@ -165,10 +184,10 @@ class IndexController extends Controller {
     private function save_data($data){
         if(is_array($data)){
             if(array_depth($data) > 1){
-                M("Beian")->add($data);
+                M("Beian")->addAll($data);
                 return true;
             }else{
-                M("Beian")->addAll($data);
+                M("Beian")->add($data);
                 return true;
             }
         }
