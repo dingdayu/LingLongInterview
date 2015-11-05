@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>IP地址数据上传页面</title>
     <!--引入CSS-->
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/webuploader-0.1.5/webuploader.css">
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap-3.3.5-dist/css/bootstrap.min.css">
@@ -39,14 +39,26 @@
 </head>
 <body>
 
-<div id="uploader" class="wu-example">
-    <!--用来存放文件信息-->
-    <div id="thelist" class="uploader-list"></div>
-    <div class="btns">
-        <div id="picker">选择文件</div>
-        <button id="ctlBtn" class="btn btn-default">开始上传</button>
+<div class="container">
+
+    <div class="form-signin">
+        <h2 class="form-signin-heading">暂无数据库文件，请上传：</h2>
+
+        <div id="uploader" class="wu-example">
+            <!--用来存放文件信息-->
+            <div id="thelist" class="uploader-list"></div>
+            <div class="btns">
+                <div id="picker">选择文件</div>
+                <button id="ctlBtn" class="btn btn-default">开始上传</button>
+            </div>
+        </div>
     </div>
-</div>
+
+    <br>
+
+</div> <!-- /container -->
+
+
 
 
 <script type="application/javascript">
@@ -101,8 +113,17 @@
         });
 
         uploader.on( 'uploadSuccess', function( file,response ) {
-            $( '#'+file.id ).find('p.state').text('已上传');
             console.log(response);
+            if(response.staues == 1){
+                $( '#'+file.id ).find('p.state').text('已上传');
+                alert(response.msg);
+                window.location.href = "{:U('index')}";
+            }else {
+                alert(response.msg);
+            }
+
+
+
         });
 
         uploader.on( 'uploadError', function( file ) {

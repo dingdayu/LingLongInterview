@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>IP地址查询</title>
+
+    <!-- Bootstrap -->
+    <link href="__PUBLIC__/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+
+<div class="container">
+
+    <div class="form-signin">
+        <h2 class="form-signin-heading">请输入IP地址：</h2>
+        <label for="ip" class="sr-only">IP地址：</label>
+        <input type="text" id="ip" class="form-control"  value="192.168.1.1" placeholder="127.0.0.1" required autofocus>
+
+        <br>
+
+        <button class="btn btn-lg btn-primary btn-block" onclick="getip()" type="submit">查询</button>
+    </div>
+
+    <br>
+    <div id="content"></div>
+
+</div> <!-- /container -->
+
+<script type="text/javascript" src="__PUBLIC__/jquery-1.10.2.min.js"></script>
+<script src="__PUBLIC__/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+
+<script type="application/javascript">
+    function getip(){
+        var ip = $('#ip').val();
+        if(ip == ""){
+            alert("请输入IP地址");
+            return;
+        }
+        $.get('{:U("get_iplocated")}',{'ip':ip},function(ret){
+            console.log(ret);
+
+            var html = "您所查询的IP：<em>" + ret.content.ip + "</em><br>"
+                + "地址信息：<em>"+ret.content.country + " " + ret.content.area + "</em>";
+            $('#content').html(html)
+        })
+    }
+
+</script>
+</body>
+</html>
